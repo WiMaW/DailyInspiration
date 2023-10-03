@@ -77,7 +77,8 @@ fun DailyTipApp(
             verticalArrangement = Arrangement.SpaceEvenly,
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = modifier
-                .padding(dimensionResource(R.dimen.padding_small)),
+                .padding(dimensionResource(R.dimen.padding_small))
+                .verticalScroll(rememberScrollState()),
         ){
             AppName()
             DailyImage(image = painterResource(dailyTip[dayNumberClick].dailyImage))
