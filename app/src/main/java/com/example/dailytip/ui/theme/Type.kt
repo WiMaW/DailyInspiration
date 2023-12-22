@@ -13,7 +13,6 @@ val Typography = Typography(
         fontFamily = FugglesRegular,
         fontWeight = FontWeight.Bold,
         fontSize = 46.sp,
-        //letterSpacing = 0.5.sp
     ),
     titleMedium = TextStyle(
         fontFamily = TajwalMedium,

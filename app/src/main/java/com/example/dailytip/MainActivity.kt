@@ -58,7 +58,7 @@ class MainActivity : ComponentActivity() {
             DailyTipTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-                ){
+                ) {
                     DailyTipApp(dailyTip = dailyList)
                 }
             }
@@ -70,89 +70,94 @@ class MainActivity : ComponentActivity() {
 fun DailyTipApp(
     dailyTip: List<DailyTip>,
     modifier: Modifier = Modifier
-){
-    var dayNumberClick by remember { mutableStateOf(value = 0)}
+) {
+    var dayNumberClick by remember { mutableStateOf(value = 0) }
 
-        Column (
-            verticalArrangement = Arrangement.spacedBy(40.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = modifier
-                .padding(dimensionResource(R.dimen.padding_small))
-                .verticalScroll(rememberScrollState())
-        ){
-            AppName()
-            DailyImage(image = painterResource(dailyTip[dayNumberClick].dailyImage))
-            Row (modifier = modifier.horizontalScroll(rememberScrollState())){
-                dailyTip.forEach {item ->
-                    DayNumberButton(
-                        dailyTip = dailyList,
-                        onClick = { dayNumberClick = parseInt(item.dayNumber) - 1},
-                        text = item.dayNumber
-                    )
-                }
+    Column(
+        verticalArrangement = Arrangement.spacedBy(40.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = modifier
+            .padding(dimensionResource(R.dimen.padding_small))
+            .verticalScroll(rememberScrollState())
+    ) {
+        AppName()
+        DailyImage(image = painterResource(dailyTip[dayNumberClick].dailyImage))
+        Row(modifier = modifier.horizontalScroll(rememberScrollState())) {
+            dailyTip.forEach { item ->
+                DayNumberButton(
+                    dailyTip = dailyList,
+                    onClick = { dayNumberClick = parseInt(item.dayNumber) - 1 },
+                    text = item.dayNumber
+                )
             }
-            DailyTipText(text = stringResource(dailyTip[dayNumberClick].tip))
         }
+        DailyTipText(text = stringResource(dailyTip[dayNumberClick].tip))
     }
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AppName() {
     CenterAlignedTopAppBar(
         title = {
-        Row {
-            Text(
-                text = stringResource(R.string.app_name),
-                style = MaterialTheme.typography.displayLarge,
-                modifier = Modifier.padding(top = 30.dp)
-            )
-        }
-    })
+            Row {
+                Text(
+                    text = stringResource(R.string.app_name),
+                    style = MaterialTheme.typography.displayLarge,
+                    modifier = Modifier.padding(top = 30.dp)
+                )
+            }
+        })
 }
 
 @Composable
 fun DailyImage(
     modifier: Modifier = Modifier,
-    image: Painter){
-    Box(modifier = modifier
-        .fillMaxWidth()
-        .height(250.dp)
-        .clip(MaterialTheme.shapes.small)){
-            Image(
-                painter = image,
-                contentDescription = null,
-                contentScale = ContentScale.Crop
-            )
+    image: Painter
+) {
+    Box(
+        modifier = modifier
+            .fillMaxWidth()
+            .height(250.dp)
+            .clip(MaterialTheme.shapes.small)
+    ) {
+        Image(
+            painter = image,
+            contentDescription = null,
+            contentScale = ContentScale.Crop
+        )
     }
 }
 
 @Composable
 fun DayNumberButton(
     dailyTip: List<DailyTip>,
-    onClick: () ->Unit,
+    onClick: () -> Unit,
     text: String,
-    modifier: Modifier = Modifier){
-        Button(
-            onClick = onClick,
-            modifier = modifier.padding(dimensionResource(R.dimen.padding_extra_small))
-        ) {
-            Text(
-                text = text,
-                style = MaterialTheme.typography.titleMedium
-            )
-        }
+    modifier: Modifier = Modifier
+) {
+    Button(
+        onClick = onClick,
+        modifier = modifier.padding(dimensionResource(R.dimen.padding_extra_small))
+    ) {
+        Text(
+            text = text,
+            style = MaterialTheme.typography.titleMedium
+        )
     }
+}
 
 @Composable
-fun DailyTipText(text: String, modifier: Modifier = Modifier){
-    Box (contentAlignment = Alignment.Center,
+fun DailyTipText(text: String, modifier: Modifier = Modifier) {
+    Box(
+        contentAlignment = Alignment.Center,
         modifier = modifier
             .clip(MaterialTheme.shapes.small)
             .background(MaterialTheme.colorScheme.primaryContainer)
             .fillMaxWidth()
             .height(200.dp)
             .padding(dimensionResource(R.dimen.padding_small))
-    ){
+    ) {
         Text(
             text = text,
             style = MaterialTheme.typography.bodyMedium,
@@ -173,7 +178,7 @@ fun DailyTipPreview() {
 @Preview
 @Composable
 fun DailyTipPreviewDark() {
-    DailyTipTheme (darkTheme = true){
+    DailyTipTheme(darkTheme = true) {
         DailyTipApp(dailyTip = dailyList)
     }
 }

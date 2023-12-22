@@ -40,7 +40,7 @@ val dailyList = listOf<DailyTip>(
     DailyTip(R.drawable.tip_twenty_seven, "27", R.string.tip_twenty_seven),
     DailyTip(R.drawable.tip_twenty_eight, "28", R.string.tip_twenty_eight),
     DailyTip(R.drawable.tip_twenty_nine, "29", R.string.tip_twenty_nine),
-    DailyTip(R.drawable.tip_theerty, "30", R.string.tip_thirty)
+    DailyTip(R.drawable.tip_thirty, "30", R.string.tip_thirty)
 )
 
 
