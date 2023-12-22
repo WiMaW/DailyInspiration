@@ -36,6 +36,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
@@ -57,7 +58,6 @@ class MainActivity : ComponentActivity() {
             DailyTipTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
                 ){
                     DailyTipApp(dailyTip = dailyList)
                 }
@@ -74,20 +74,20 @@ fun DailyTipApp(
     var dayNumberClick by remember { mutableStateOf(value = 0)}
 
         Column (
-            verticalArrangement = Arrangement.SpaceEvenly,
+            verticalArrangement = Arrangement.spacedBy(40.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = modifier
                 .padding(dimensionResource(R.dimen.padding_small))
-                .verticalScroll(rememberScrollState()),
+                .verticalScroll(rememberScrollState())
         ){
             AppName()
             DailyImage(image = painterResource(dailyTip[dayNumberClick].dailyImage))
             Row (modifier = modifier.horizontalScroll(rememberScrollState())){
-                dailyTip.forEach {
+                dailyTip.forEach {item ->
                     DayNumberButton(
                         dailyTip = dailyList,
-                        onClick = { dayNumberClick = parseInt(it.dayNumber) - 1},
-                        text = it.dayNumber
+                        onClick = { dayNumberClick = parseInt(item.dayNumber) - 1},
+                        text = item.dayNumber
                     )
                 }
             }
@@ -98,11 +98,13 @@ fun DailyTipApp(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AppName() {
-    CenterAlignedTopAppBar(title = {
+    CenterAlignedTopAppBar(
+        title = {
         Row {
             Text(
                 text = stringResource(R.string.app_name),
-                style = MaterialTheme.typography.displayLarge
+                style = MaterialTheme.typography.displayLarge,
+                modifier = Modifier.padding(top = 30.dp)
             )
         }
     })
@@ -162,7 +164,7 @@ fun DailyTipText(text: String, modifier: Modifier = Modifier){
 
 @Preview(showBackground = true)
 @Composable
-fun GreetingPreview() {
+fun DailyTipPreview() {
     DailyTipTheme {
         DailyTipApp(dailyTip = dailyList)
     }
@@ -170,7 +172,7 @@ fun GreetingPreview() {
 
 @Preview
 @Composable
-fun GreetingPreviewDark() {
+fun DailyTipPreviewDark() {
     DailyTipTheme (darkTheme = true){
         DailyTipApp(dailyTip = dailyList)
     }
