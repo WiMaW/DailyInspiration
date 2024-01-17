@@ -42,5 +42,3 @@ val dailyList = listOf<DailyTip>(
     DailyTip(R.drawable.tip_twenty_nine, "29", R.string.tip_twenty_nine),
     DailyTip(R.drawable.tip_thirty, "30", R.string.tip_thirty)
 )
-
-
