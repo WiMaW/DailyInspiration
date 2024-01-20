@@ -40,7 +40,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.example.dailytip.data.dailyImageList
 import com.example.dailytip.ui.theme.DailyInspirationTheme
 
 
@@ -66,11 +65,9 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-
 @Composable
 fun DailyInspirationApp(
     viewModel: DailyViewModel,
-    //numberClicked: Int,
     uiState: State<DailyUiState>,
     imageUri: String,
     modifier: Modifier = Modifier
@@ -100,7 +97,8 @@ fun DailyInspirationApp(
         Spacer(modifier = Modifier.height(dimensionResource(R.dimen.padding_large)))
         DayNumberButton(viewModel)
         Box(
-            modifier = Modifier.padding(vertical = dimensionResource(R.dimen.padding_large)),
+            modifier = Modifier
+                .padding(vertical = dimensionResource(R.dimen.padding_large)),
             Alignment.BottomCenter
         ) {
             if (uiState.value.networkProblems) SnackBarConnectionProblems()
@@ -116,7 +114,6 @@ fun SnackBarConnectionProblems(
         shape = MaterialTheme.shapes.small,
     ) {
         Text(text = "Network problem. Try again.")
-
     }
 }
 
@@ -139,7 +136,6 @@ fun DailyImage(
     modifier: Modifier = Modifier,
     imageUrl: String
 ) {
-    //val context = LocalContext.current
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
@@ -221,19 +217,3 @@ fun DailyTipText(
         )
     }
 }
-
-//@Preview(showBackground = true)
-//@Composable
-//fun DailyTipPreview() {
-//    DailyTipTheme {
-//        DailyTipApp(dailyTip = dailyList)
-//    }
-//}
-//
-//@Preview
-//@Composable
-//fun DailyTipPreviewDark() {
-//    DailyTipTheme(darkTheme = true) {
-//        DailyTipApp(dailyTip = dailyList)
-//    }
-//}

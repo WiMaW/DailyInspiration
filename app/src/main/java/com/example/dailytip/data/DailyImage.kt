@@ -37,4 +37,4 @@ val dailyImageList: List<DailyImage> = listOf(
     DailyImage("https://www.lifewire.com/thmb/fx5yRnknGe1BR-8ZK4pgFdX8o4A=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/0010_15-best-inspirational-movies-of-2020-5091979-53d3f0b5778a48bcaf625143f59c2b6a.jpeg"),
     DailyImage("https://www.treehugger.com/thmb/fUTq1o1ypSiUiJD48wIqKERzneM=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/GettyImages-1317797007-6f3f421d31f4436db1c400ee51fe8aea.jpg"),
     DailyImage("https://thumbs.dreamstime.com/b/inspirational-presentation-image-room-text-copy-space-concept-hope-winning-never-give-up-struggle-persistence-58740548.jpg"),
-    )
+)
