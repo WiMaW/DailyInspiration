@@ -42,9 +42,9 @@ class DailyViewModel: ViewModel() {
                 val response = apiQuoteService.getDailyQuote()
                 dailyQuote = response
             } catch (e: IOException ) {
-
+                networkProblemsInfoForUser()
             } catch (e: HttpException) {
-
+                networkProblemsInfoForUser()
             }
         }
     }
@@ -56,12 +56,14 @@ class DailyViewModel: ViewModel() {
         }
     }
 
-    @Composable
-    fun networkProblemsInfoForUser() {
-
+    private fun networkProblemsInfoForUser() {
+        _uiState.update {
+            it.copy(networkProblems = true)
+        }
     }
 }
 data class DailyUiState (
     var numberClicked: Int = 0,
     var dailyQuote: DailyQuote? = null,
+    var networkProblems: Boolean = false
 )

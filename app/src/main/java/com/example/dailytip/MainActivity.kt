@@ -5,14 +5,11 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.background
-import androidx.compose.foundation.gestures.Orientation
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -25,6 +22,9 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Snackbar
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -36,10 +36,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
-import androidx.compose.ui.res.fontResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -47,7 +44,8 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.dailytip.data.dailyImageList
 import com.example.dailytip.ui.theme.DailyInspirationTheme
-import com.example.dailytip.ui.theme.dancingScriptFont
+import com.example.dailytip.ui.theme.md_theme_light_shadow
+import java.nio.file.WatchEvent
 
 
 class MainActivity : ComponentActivity() {
@@ -64,7 +62,7 @@ class MainActivity : ComponentActivity() {
                 ) {
                     viewModel.getQuotes()
                     uiState = viewModel.uiState.collectAsState()
-                    DailyInspirationApp(viewModel, uiState.value.numberClicked)
+                    DailyInspirationApp(viewModel, uiState)
                 }
             }
         }
@@ -76,7 +74,8 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun DailyInspirationApp(
     viewModel: DailyViewModel,
-    numberClicked: Int,
+    //numberClicked: Int,
+    uiState: State<DailyUiState>,
     modifier: Modifier = Modifier
 ) {
 
@@ -86,16 +85,34 @@ fun DailyInspirationApp(
         modifier = modifier
             .fillMaxSize()
             .padding(dimensionResource(R.dimen.padding_small))
+            .verticalScroll(rememberScrollState())
     ) {
         AppName()
         Spacer(modifier = Modifier.height(dimensionResource(R.dimen.padding_large)))
-        when (numberClicked) {
+        when (uiState.value.numberClicked) {
             0 -> viewModel.dailyQuote?.let { DailyTipText(dailyQuote = it.content, dailyQuoteAuthor = it.author) }
             1 -> DailyImage(imageUrl = dailyImageList.random().imageUri)
 
         }
         Spacer(modifier = Modifier.height(dimensionResource(R.dimen.padding_large)))
         DayNumberButton(viewModel)
+        Box ( modifier = Modifier.padding(vertical = dimensionResource(R.dimen.padding_large)),
+            Alignment.BottomCenter
+        ){
+            if (uiState.value.networkProblems) SnackBarConnectionProblems()
+        }
+
+    }
+}
+
+@Composable
+fun SnackBarConnectionProblems(
+) {
+    Snackbar (
+        shape = MaterialTheme.shapes.small,
+    ) {
+        Text(text = "Network problem. Try again.")
+
     }
 }
 
@@ -176,7 +193,6 @@ fun DailyTipText(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
         modifier = modifier
-            .verticalScroll(rememberScrollState())
             .clip(MaterialTheme.shapes.small)
             .background(MaterialTheme.colorScheme.primaryContainer)
             .fillMaxWidth()
