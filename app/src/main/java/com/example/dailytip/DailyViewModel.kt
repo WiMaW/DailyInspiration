@@ -17,6 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.dailytip.data.dailyImageList
 
 import com.example.dailytip.network.model.DailyQuote
 import com.example.dailytip.network.DailyQuoteRepository
@@ -47,6 +48,10 @@ class DailyViewModel: ViewModel() {
                 networkProblemsInfoForUser()
             }
         }
+    }
+
+    fun getImage() : String {
+        return dailyImageList.random().imageUri
     }
 
 

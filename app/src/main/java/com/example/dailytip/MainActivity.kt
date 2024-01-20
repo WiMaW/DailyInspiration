@@ -23,8 +23,6 @@ import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Snackbar
-import androidx.compose.material3.SnackbarDuration
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -44,8 +42,6 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.dailytip.data.dailyImageList
 import com.example.dailytip.ui.theme.DailyInspirationTheme
-import com.example.dailytip.ui.theme.md_theme_light_shadow
-import java.nio.file.WatchEvent
 
 
 class MainActivity : ComponentActivity() {
@@ -61,8 +57,9 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                 ) {
                     viewModel.getQuotes()
+                    val imageUri = viewModel.getImage()
                     uiState = viewModel.uiState.collectAsState()
-                    DailyInspirationApp(viewModel, uiState)
+                    DailyInspirationApp(viewModel, uiState, imageUri)
                 }
             }
         }
@@ -70,12 +67,12 @@ class MainActivity : ComponentActivity() {
 }
 
 
-
 @Composable
 fun DailyInspirationApp(
     viewModel: DailyViewModel,
     //numberClicked: Int,
     uiState: State<DailyUiState>,
+    imageUri: String,
     modifier: Modifier = Modifier
 ) {
 
@@ -90,15 +87,22 @@ fun DailyInspirationApp(
         AppName()
         Spacer(modifier = Modifier.height(dimensionResource(R.dimen.padding_large)))
         when (uiState.value.numberClicked) {
-            0 -> viewModel.dailyQuote?.let { DailyTipText(dailyQuote = it.content, dailyQuoteAuthor = it.author) }
-            1 -> DailyImage(imageUrl = dailyImageList.random().imageUri)
+            0 -> viewModel.dailyQuote?.let {
+                DailyTipText(
+                    dailyQuote = it.content,
+                    dailyQuoteAuthor = it.author
+                )
+            }
+
+            1 -> DailyImage(imageUrl = imageUri)
 
         }
         Spacer(modifier = Modifier.height(dimensionResource(R.dimen.padding_large)))
         DayNumberButton(viewModel)
-        Box ( modifier = Modifier.padding(vertical = dimensionResource(R.dimen.padding_large)),
+        Box(
+            modifier = Modifier.padding(vertical = dimensionResource(R.dimen.padding_large)),
             Alignment.BottomCenter
-        ){
+        ) {
             if (uiState.value.networkProblems) SnackBarConnectionProblems()
         }
 
@@ -108,7 +112,7 @@ fun DailyInspirationApp(
 @Composable
 fun SnackBarConnectionProblems(
 ) {
-    Snackbar (
+    Snackbar(
         shape = MaterialTheme.shapes.small,
     ) {
         Text(text = "Network problem. Try again.")
@@ -163,13 +167,13 @@ fun DayNumberButton(
     viewModel: DailyViewModel,
     modifier: Modifier = Modifier
 ) {
-    LazyRow (horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-        items(2) {item ->
+    LazyRow(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+        items(2) { item ->
             Button(
                 onClick = { viewModel.updateView(item) },
                 modifier = modifier
                     .width(150.dp),
-                shape =  MaterialTheme.shapes.small,
+                shape = MaterialTheme.shapes.small,
             ) {
                 Text(
                     text = if (item == 0) "quote" else "image",
