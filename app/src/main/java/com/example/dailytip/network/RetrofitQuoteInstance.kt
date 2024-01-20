@@ -1,5 +1,6 @@
 package com.example.dailytip.network
 
+import com.example.dailytip.network.model.DailyQuote
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 

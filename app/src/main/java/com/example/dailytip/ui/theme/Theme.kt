@@ -83,12 +83,13 @@ private val DarkColors = darkColorScheme(
     scrim = md_theme_dark_scrim,
 )
 
-val FugglesRegular = FontFamily(Font(R.font.fuggles_regular))
+val SatisfyRegular= FontFamily(Font(R.font.satisfy_regular))
+val DancingScriptRegular = FontFamily(Font(R.font.dancingscript_regular))
 val TajwalLight = FontFamily(Font(R.font.tajawal_light))
 val TajwalMedium = FontFamily(Font(R.font.tajawal_medium))
 
 @Composable
-fun DailyTipTheme(
+fun DailyInspirationTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
     dynamicColor: Boolean = false,

@@ -2,9 +2,9 @@ package com.example.dailytip.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val md_theme_light_primary = Color(0xFFFFCACC)
+val md_theme_light_primary = Color(0xFF55BBB1)
 val md_theme_light_onPrimary = Color(0xFF20182A)
-val md_theme_light_primaryContainer = Color(0xFFDBC4F0)
+val md_theme_light_primaryContainer = Color(0xFFF6E1E1)
 val md_theme_light_onPrimaryContainer = Color(0xFF2B0052)
 val md_theme_light_secondary = Color(0xFF655A6F)
 val md_theme_light_onSecondary = Color(0xFFFFFFFF)
@@ -29,7 +29,7 @@ val md_theme_light_inverseOnSurface = Color(0xFFF5EFF4)
 val md_theme_light_inverseSurface = Color(0xFF322F33)
 val md_theme_light_inversePrimary = Color(0xFFDBB8FF)
 val md_theme_light_shadow = Color(0xFF000000)
-val md_theme_light_surfaceTint = Color(0xFF734C9E)
+val md_theme_light_surfaceTint = Color(0xFF6E1E1)
 val md_theme_light_outlineVariant = Color(0xFFCCC4CF)
 val md_theme_light_scrim = Color(0xFF000000)
 

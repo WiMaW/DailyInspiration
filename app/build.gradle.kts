@@ -68,8 +68,9 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
 
-    //to load images
-    implementation("io.coil-kt:coil-compose:2.4.0")
+    //coil
+    implementation("io.coil-kt:coil-compose:2.5.0")
+
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
