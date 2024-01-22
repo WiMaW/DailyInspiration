@@ -84,10 +84,18 @@ fun DailyInspirationApp(
         AppName()
         Spacer(modifier = Modifier.height(dimensionResource(R.dimen.padding_large)))
         when (uiState.value.numberClicked) {
-            0 -> viewModel.dailyQuote?.let {
-                DailyTipText(
-                    dailyQuote = it.content,
-                    dailyQuoteAuthor = it.author
+            0 -> {
+                viewModel.dailyQuote?.let {
+                    DailyText(
+                        dailyQuote = it.content,
+                        dailyQuoteAuthor = it.author
+                    )
+                }
+                if (uiState.value.networkProblems) DailyText(
+                    dailyQuote = stringResource(id = R.string.network_problem_default_quote),
+                    dailyQuoteAuthor = stringResource(
+                        id = R.string.network_problem_default_author
+                    )
                 )
             }
 
@@ -113,7 +121,7 @@ fun SnackBarConnectionProblems(
     Snackbar(
         shape = MaterialTheme.shapes.small,
     ) {
-        Text(text = "Network problem. Try again.")
+        Text(text = stringResource(id = R.string.network_problem_snackbar_text))
     }
 }
 
@@ -151,7 +159,7 @@ fun DailyImage(
                 .data(imageUrl)
                 .crossfade(true)
                 .build(),
-            contentDescription = "",
+            contentDescription = null,
             contentScale = ContentScale.Crop,
             modifier = Modifier.clip(MaterialTheme.shapes.small)
         )
@@ -172,7 +180,9 @@ fun DayNumberButton(
                 shape = MaterialTheme.shapes.small,
             ) {
                 Text(
-                    text = if (item == 0) "quote" else "image",
+                    text = if (item == 0) stringResource(R.string.quote_button_text) else stringResource(
+                        R.string.image_button_text
+                    ),
                     modifier = Modifier
                         .align(Alignment.CenterVertically),
                     style = MaterialTheme.typography.labelMedium,
@@ -184,7 +194,7 @@ fun DayNumberButton(
 }
 
 @Composable
-fun DailyTipText(
+fun DailyText(
     modifier: Modifier = Modifier,
     dailyQuote: String,
     dailyQuoteAuthor: String,

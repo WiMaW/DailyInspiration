@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">Daily Inspiration</string>
 
+    <string name="network_problem_snackbar_text">Network problem. Try again.</string>
+    <string name="network_problem_default_quote">If it weren\'t for internet problems, your quote would be here.</string>
+    <string name="network_problem_default_author">Dev</string>
+
+    <string name="quote_button_text">quote</string>
+    <string name="image_button_text">image</string>
 </resources>
