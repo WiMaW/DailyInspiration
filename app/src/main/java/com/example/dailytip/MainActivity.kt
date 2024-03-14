@@ -96,10 +96,12 @@ fun DailyInspirationApp(
                             )
                         }
                     }
+
                     1 -> {
                         DailyImage(imageUrl = imageUri)
                     }
                 }
+
             DailyInspirationOperationStatus.ERROR ->
                 DailyText(
                     dailyQuote = stringResource(id = R.string.network_problem_default_quote),
@@ -107,46 +109,12 @@ fun DailyInspirationApp(
                         id = R.string.network_problem_default_author
                     )
                 )
+
             DailyInspirationOperationStatus.LOADING ->
                 CircularProgressIndicator()
+
             DailyInspirationOperationStatus.UNKNOWN -> {}
         }
-
-
-//        when (uiState.value.numberClicked) {
-//            0 -> {
-//                when (viewModel.getDailyQuote) {
-//                    DailyInspirationOperationStatus.SUCCESS ->
-//                        viewModel.dailyQuote?.let {
-//                            DailyText(
-//                                dailyQuote = it.content,
-//                                dailyQuoteAuthor = it.author
-//                            )
-//                        }
-//                    DailyInspirationOperationStatus.ERROR ->
-//                        DailyText(
-//                            dailyQuote = stringResource(id = R.string.network_problem_default_quote),
-//                            dailyQuoteAuthor = stringResource(
-//                                id = R.string.network_problem_default_author
-//                            )
-//                        )
-//                    DailyInspirationOperationStatus.LOADING ->
-//                        CircularProgressIndicator()
-//                    DailyInspirationOperationStatus.UNKNOWN -> {}
-//                }
-//            }
-//            1 -> {
-//                when (viewModel.getDailyQuote) {
-//                    DailyInspirationOperationStatus.SUCCESS ->
-//                        DailyImage(imageUrl = imageUri)
-//                    DailyInspirationOperationStatus.ERROR ->
-//                        ""
-//                    DailyInspirationOperationStatus.LOADING ->
-//                        CircularProgressIndicator()
-//                    DailyInspirationOperationStatus.UNKNOWN -> {}
-//                }
-//            }
-   //     }
         Spacer(modifier = Modifier.height(dimensionResource(R.dimen.padding_large)))
         DayNumberButton(viewModel)
         Box(
