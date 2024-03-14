@@ -20,6 +20,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Snackbar
@@ -40,6 +41,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import com.example.dailytip.network.model.DailyInspirationOperationStatus
 import com.example.dailytip.ui.theme.DailyInspirationTheme
 
 
@@ -83,25 +85,68 @@ fun DailyInspirationApp(
     ) {
         AppName()
         Spacer(modifier = Modifier.height(dimensionResource(R.dimen.padding_large)))
-        when (uiState.value.numberClicked) {
-            0 -> {
-                viewModel.dailyQuote?.let {
-                    DailyText(
-                        dailyQuote = it.content,
-                        dailyQuoteAuthor = it.author
-                    )
+        when (viewModel.getDailyInspiration) {
+            DailyInspirationOperationStatus.SUCCESS ->
+                when (uiState.value.numberClicked) {
+                    0 -> {
+                        viewModel.dailyQuote?.let {
+                            DailyText(
+                                dailyQuote = it.content,
+                                dailyQuoteAuthor = it.author
+                            )
+                        }
+                    }
+                    1 -> {
+                        DailyImage(imageUrl = imageUri)
+                    }
                 }
-                if (uiState.value.networkProblems) DailyText(
+            DailyInspirationOperationStatus.ERROR ->
+                DailyText(
                     dailyQuote = stringResource(id = R.string.network_problem_default_quote),
                     dailyQuoteAuthor = stringResource(
                         id = R.string.network_problem_default_author
                     )
                 )
-            }
-
-            1 -> DailyImage(imageUrl = imageUri)
-
+            DailyInspirationOperationStatus.LOADING ->
+                CircularProgressIndicator()
+            DailyInspirationOperationStatus.UNKNOWN -> {}
         }
+
+
+//        when (uiState.value.numberClicked) {
+//            0 -> {
+//                when (viewModel.getDailyQuote) {
+//                    DailyInspirationOperationStatus.SUCCESS ->
+//                        viewModel.dailyQuote?.let {
+//                            DailyText(
+//                                dailyQuote = it.content,
+//                                dailyQuoteAuthor = it.author
+//                            )
+//                        }
+//                    DailyInspirationOperationStatus.ERROR ->
+//                        DailyText(
+//                            dailyQuote = stringResource(id = R.string.network_problem_default_quote),
+//                            dailyQuoteAuthor = stringResource(
+//                                id = R.string.network_problem_default_author
+//                            )
+//                        )
+//                    DailyInspirationOperationStatus.LOADING ->
+//                        CircularProgressIndicator()
+//                    DailyInspirationOperationStatus.UNKNOWN -> {}
+//                }
+//            }
+//            1 -> {
+//                when (viewModel.getDailyQuote) {
+//                    DailyInspirationOperationStatus.SUCCESS ->
+//                        DailyImage(imageUrl = imageUri)
+//                    DailyInspirationOperationStatus.ERROR ->
+//                        ""
+//                    DailyInspirationOperationStatus.LOADING ->
+//                        CircularProgressIndicator()
+//                    DailyInspirationOperationStatus.UNKNOWN -> {}
+//                }
+//            }
+   //     }
         Spacer(modifier = Modifier.height(dimensionResource(R.dimen.padding_large)))
         DayNumberButton(viewModel)
         Box(
@@ -109,7 +154,7 @@ fun DailyInspirationApp(
                 .padding(vertical = dimensionResource(R.dimen.padding_large)),
             Alignment.BottomCenter
         ) {
-            if (uiState.value.networkProblems) SnackBarConnectionProblems()
+            if (viewModel.getDailyInspiration == DailyInspirationOperationStatus.ERROR) SnackBarConnectionProblems()
         }
 
     }
